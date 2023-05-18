@@ -1,6 +1,5 @@
 import streamlit as st
 import pickle
-import sklearn 
 
 # -------- Importing Model ----------
 with open('SVC_model.pkl', 'rb') as f:
