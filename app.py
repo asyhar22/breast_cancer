@@ -7,21 +7,39 @@ with open('SVC_model.pkl', 'rb') as f:
 
 # ----------- Title ---------
 st.title('Breast Cancer Prediction App')
+st.write('The breast cancer dataset is a collection of data that is used to train and test machine learning algorithms for breast cancer detection. The dataset contains 569 instances, each of which is described by 30 features. The features are measurements of the cell nuclei present in a digitized image of a fine needle aspirate (FNA) of a breast mass. The goal of the machine learning algorithm is to predict whether the instance is malignant (M) or benign (B).')
+
+# ----------- Reset Function -------------
+def session_state_reset():
+    for key in st.session_state.keys():
+        del st.session_state[key]
 
 # --------- Widgets -----------
-radius = st.slider('Radius', 1, 100, 15)
-texture = st.slider('Texture', 1, 100, 50)
-smoothness = st.slider('Smoothness', 1, 100, 75)
-compactness = st.slider('Compactness', 1, 100, 80)
-concavity = st.slider('Concavity', 1, 100, 90)
-symmetry = st.slider('Symmetry', 1, 100, 95)
-fractal_dimension = st.slider('Fractal Dimension', 1, 100, 100)
-
+st.header('Input Form:')
+with st.form(key='my_widgets'):
+    radius = st.slider('Radius (millimeters)', min_value=0.0, max_value=50.0, step=0.01, value=0.0, key='radius')
+    texture = st.slider('Texture (gray-scale values)', min_value=0.0, max_value=50.0, step=0.01, value=0.0, key='texture')
+    smoothness = st.slider('Smoothness (1/(standard deviation of radius lengths))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='smoothness')
+    compactness = st.slider('Compactness (1 - (perimeter^2 / area))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='compactness')
+    concavity = st.slider('Concavity (1/(number of concave portions of the contour))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='concavity')
+    symmetry = st.slider('Symmetry', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='symmetry')
+    fractal_dimension = st.slider('Fractal Dimension (Dimensionless)', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='fractal_dimension')
+    predict = st.form_submit_button(label='Predict')
+    reset = st.form_submit_button(label='Reset')
 # ---------- Call the model -----------
-prediction = model.predict([[radius, texture, smoothness, compactness, concavity, symmetry, fractal_dimension]])
+prediction = ['','']
+if predict:
+    prediction = model.predict([[radius, texture, smoothness, compactness, concavity, symmetry, fractal_dimension]])
+
+# ---------- Reset button -------------
+if reset:
+    session_state_reset()
 
 # ----------- Display result ------------
+st.header('Prediction Result:')
 if prediction[0] == 0:
     st.write('The tumor is malignant.')
-else:
+elif prediction[0] == 1:
     st.write('The tumor is benign.')
+else:
+    st.write('The result will be shown here.')
