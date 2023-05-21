@@ -24,8 +24,12 @@ with st.form(key='my_widgets'):
     concavity = st.slider('Concavity (1/(number of concave portions of the contour))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='concavity')
     symmetry = st.slider('Symmetry', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='symmetry')
     fractal_dimension = st.slider('Fractal Dimension (Dimensionless)', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='fractal_dimension')
-    predict = st.form_submit_button(label='Predict')
-    reset = st.form_submit_button(label='Reset')
+    col1, space1, col2, space2 = st.columns([10,0.1,9,50])
+    with col1:
+        predict = st.form_submit_button(label='Predict')
+    with col2:
+        reset = st.form_submit_button(label='Reset')
+
 # ---------- Call the model -----------
 prediction = ['','']
 if predict:
@@ -39,7 +43,9 @@ if reset:
 st.header('Prediction Result:')
 if prediction[0] == 0:
     st.write('The tumor is malignant.')
+    st.write('A malignant breast tumor is a cancerous growth that can spread to other parts of the body. Malignant breast tumors are the most common type of cancer in women, and they can be life-threatening.')
 elif prediction[0] == 1:
     st.write('The tumor is benign.')
+    st.write('A benign breast tumor is a non-cancerous growth that does not spread to other parts of the body. Benign breast tumors are not usually life-threatening, and they are typically removed with surgery.')
 else:
     st.write('The result will be shown here.')
