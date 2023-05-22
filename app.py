@@ -2,8 +2,13 @@ import streamlit as st
 import pickle
 
 # -------- Importing Model ----------
-with open('SVC_model.pkl', 'rb') as f:
-    model = pickle.load(f)
+@st.cache_data
+def load_model():
+    with open('SVC_model.pkl', 'rb') as f:
+        model = pickle.load(f)
+    return model
+
+model = load_model()
 
 # ----------- Title ---------
 st.title('Breast Cancer Prediction App')
@@ -24,12 +29,11 @@ with st.form(key='my_widgets'):
     concavity = st.slider('Concavity (1/(number of concave portions of the contour))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='concavity')
     symmetry = st.slider('Symmetry', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='symmetry')
     fractal_dimension = st.slider('Fractal Dimension (Dimensionless)', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='fractal_dimension')
-    col1, space1, col2, space2 = st.columns([10,0.1,9,50])
+    col1,space,col2 = st.columns([8,1,50])
     with col1:
         predict = st.form_submit_button(label='Predict')
     with col2:
         reset = st.form_submit_button(label='Reset')
-
 # ---------- Call the model -----------
 prediction = ['','']
 if predict:
