@@ -4,7 +4,7 @@ import pickle
 # -------- Importing Model ----------
 @st.cache_data
 def load_model():
-    with open('SVC_model.pkl', 'rb') as f:
+    with open('clf_sel.pkl', 'rb') as f:
         model = pickle.load(f)
     return model
 
@@ -26,9 +26,6 @@ with st.form(key='my_widgets'):
     texture = st.slider('Texture (gray-scale values)', min_value=0.0, max_value=50.0, step=0.01, value=0.0, key='texture')
     smoothness = st.slider('Smoothness (1/(standard deviation of radius lengths))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='smoothness')
     compactness = st.slider('Compactness (1 - (perimeter^2 / area))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='compactness')
-    concavity = st.slider('Concavity (1/(number of concave portions of the contour))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='concavity')
-    symmetry = st.slider('Symmetry', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='symmetry')
-    fractal_dimension = st.slider('Fractal Dimension (Dimensionless)', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='fractal_dimension')
     col1,space,col2 = st.columns([8,1,50])
     with col1:
         predict = st.form_submit_button(label='Predict')
@@ -37,7 +34,7 @@ with st.form(key='my_widgets'):
 # ---------- Call the model -----------
 prediction = ['','']
 if predict:
-    prediction = model.predict([[radius, texture, smoothness, compactness, concavity, symmetry, fractal_dimension]])
+    prediction = model.predict([[radius, texture, smoothness, compactness]])
 
 # ---------- Reset button -------------
 if reset:
