@@ -35,7 +35,7 @@ with st.form(key='my_widgets'):
 # ---------- Call the model -----------
 prediction = ['','']
 if predict:
-    prediction = model.predict([[radius, texture, smoothness, compactness]])
+    prediction = model.predict([[radius, texture, smoothness, compactness, texture_error]])
 
 # ---------- Reset button -------------
 if reset:
