@@ -22,10 +22,11 @@ def session_state_reset():
 # --------- Widgets -----------
 st.header('Input Form:')
 with st.form(key='my_widgets'):
-    radius = st.slider('Radius (millimeters)', min_value=0.0, max_value=50.0, step=0.01, value=0.0, key='radius')
-    texture = st.slider('Texture (gray-scale values)', min_value=0.0, max_value=50.0, step=0.01, value=0.0, key='texture')
-    smoothness = st.slider('Smoothness (1/(standard deviation of radius lengths))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='smoothness')
-    compactness = st.slider('Compactness (1 - (perimeter^2 / area))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='compactness')
+    radius = st.slider('Mean Radius (millimeters)', min_value=0.0, max_value=50.0, step=0.01, value=0.0, key='radius')
+    texture = st.slider('Mean Texture (gray-scale values)', min_value=0.0, max_value=50.0, step=0.01, value=0.0, key='texture')
+    smoothness = st.slider('Mean Smoothness (1/(standard deviation of radius lengths))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='smoothness')
+    compactness = st.slider('Mean Compactness (1 - (perimeter^2 / area))', min_value=0.0, max_value=1.0, step=0.001, value=0.0, key='compactness')
+    texture_error = st.slider('Texture Error (gray-scale values)', min_value=0.0, max_value=50.0, step=0.01, value=0.0, key='texture_error')
     col1,space,col2 = st.columns([8,1,50])
     with col1:
         predict = st.form_submit_button(label='Predict')
